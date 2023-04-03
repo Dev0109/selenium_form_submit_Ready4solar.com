@@ -32,91 +32,63 @@ def browser_bot(row):
 
 
         # Navigate to Google
-        driver.get('https://upgrades4myhome.com')
+        driver.get('https://Ready4solar.com')
 
-        time.sleep(4)
-
-        element = driver.find_element(By.CSS_SELECTOR, 'a[data-target="#zipcodeBox"][item-val="6"][item-prod="Roofing"]')
-
-        # Click the search button
-        element.click()
+        time.sleep(2)
 
         # Find the zipcode input element by id
         zip_input = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'zip'))
+            EC.element_to_be_clickable((By.ID, 'zip_code'))
         )
 
         # Enter a zipcode value
         zip_input.send_keys(zip_code)
         time.sleep(1.23)
-        ###### ALternative that uses key delays
-        # Enter text with a delay between each keystroke
-        # text = 'hello world'
-        # actions = ActionChains(driver)
-        # for char in text:
-        #     actions = actions.send_keys(char)
-        #     actions.perform()
-        #     time.sleep(0.5)
-
-
-
-
 
         # Locate the First Continue Button
         button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, 'btn-zip'))
+            EC.element_to_be_clickable((By.XPATH, '/html/body/div/div[2]/div[2]/div/div[2]/div/form/div[2]/input'))
         )
         button.click()
-        time.sleep(3)
+        time.sleep(2)
 
-        # Locate the New/Replacement radio button and click it
-        input_element = driver.find_element(By.ID, 'projectType2')
+        driver.get('https://ready4solar.com/start-now/?zip_code=${zip_code}&campaign_id=&lp_request_id=&utm_source=&utm_medium=&utm_campaign=&utm_term=&utm_content=&fb_page_id=&fb_ad_id=&fb_ad_name=&fb_adset_id=&fb_adset_name=&fb_campaign_id=&fb_campaign_name=&fb_form_id=')
+
+        # Locate the Family House Yes radio button and click it
+        input_element = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div/div/div[2]/div/form/div[2]/div[1]/label/input')
         input_element.click()
         time.sleep(1.23)
 
-        # Locate the new/replace Continue Button
+        #Approximate shading of roof option select open
+        input_element = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div/div/div[2]/div/form/div[2]/div[3]/div[1]/select/option[1]')
+        input_element.click()
+        time.sleep(4)
+
+        #Continue Button
         button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//div[@data-slick-index="0"]//button[@id="btn-zip"]'))
+            EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[1]/div/div/div[2]/div/form/div[2]/div[3]/div[2]/input'))
         )
         button.click()
         time.sleep(3)
 
-        # Locate the Residential Yes radio button and click it
-        input_element = driver.find_element(By.ID, 'residential1')
+
+
+        # Locate the average monthly electric bill select : $101~200
+        input_element = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div/div/div[2]/div/form/div[3]/div[1]/select/option[2]')
         input_element.click()
         time.sleep(1.23)
 
-        # Locate the Continue Button
-        button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//div[@data-slick-index="1"]//button[@id="btn-zip"]'))
-        )
-        button.click()
-        time.sleep(3)
-
-        # Locate the Homeowner Yes radio button and click it
-        input_element = driver.find_element(By.ID, 'homeowner1')
-        input_element.click()
-        time.sleep(1.23)
-
-        # Locate the Continue Button
-        button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//div[@data-slick-index="2"]//button[@id="btn-zip"]'))
-        )
-        button.click()
-        time.sleep(3)
-
-        # Locate the Homeowner Yes radio button and click it
-        input_element = driver.find_element(By.ID, 'timeframe4')
+        # Locate the Name of Electric Utility Company : 4 Change
+        input_element = driver.find_element(By.XPATH, '/html/body/div[1]/div[1]/div/div/div[2]/div/form/div[3]/div[2]/select/option[2]')
         input_element.click()
         time.sleep(1.23)
 
         # Locate the Continue Button
         button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//div[@data-slick-index="3"]//button[@id="btn-zip"]'))
+            EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[1]/div/div/div[2]/div/form/div[3]/div[3]/input'))
         )
         button.click()
         time.sleep(3)
-
 
         ################# Contact Info pg 1 ##########################
         # Find the first name input element by id
@@ -134,20 +106,6 @@ def browser_bot(row):
         email_address_input.send_keys(email_address)
         time.sleep(1.23)
 
-        # Locate the Continue Button
-        button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//div[@data-slick-index="4"]//button[@id="btn-zip"]'))
-        )
-        button.click()
-        time.sleep(3)
-
-
-        ################# Contact Info pg 2 ##########################
-        # Find the first name input element by id
-        phone_home_input = driver.find_element(By.ID, 'phone_home')
-        phone_home_input.send_keys(phone_home)
-        time.sleep(1.23)
-
         # Find the last name input element by id
         address_input = driver.find_element(By.ID, 'address')
         address_input.send_keys(address)
@@ -162,12 +120,17 @@ def browser_bot(row):
         select_element = driver.find_element(By.ID, 'state')
         state_select = Select(select_element)
         state_select.select_by_value(state)
+        time.sleep(1.23)
+        
+        # Find the first name input element by id
+        phone_home_input = driver.find_element(By.ID, 'phone_home')
+        phone_home_input.send_keys(phone_home)
 
         # Zipcode is already defaulted from prior input
 
         # Locate the Submit Button
         button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//div[@data-slick-index="5"]//button[@id="btn-zip"]'))
+            EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[1]/div/div/div[2]/div/form/div[4]/div[9]/input'))
         )
         button.click()
         time.sleep(3)
